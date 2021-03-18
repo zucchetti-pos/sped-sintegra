@@ -249,8 +249,6 @@ abstract class Element implements ElementInterface
 
     private function numberFormatAliquota($value, $length)
     {
-        $value = str_pad($value, 4, "0", STR_PAD_RIGHT);
-
         return str_pad($value, $length, "0", STR_PAD_LEFT);
     }
 
