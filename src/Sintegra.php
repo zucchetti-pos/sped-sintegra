@@ -42,6 +42,8 @@ abstract class Sintegra
             }
         }
         $sintegra .= $this->totalize($sintegra);
+        $sintegra = str_replace("\n", "\r\n", $sintegra);
+        
         return $sintegra;
     }
 
