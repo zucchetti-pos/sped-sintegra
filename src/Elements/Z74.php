@@ -56,18 +56,18 @@ class Z74 extends Element implements ElementInterface
             'length' => 1
         ],
         'CNPJ' => [
-            'type' => 'numeric',
-            'regex' => '^[0-9]{11,14}$',
+            'type' => 'string',
+            'regex' => '^[0-9]{14}$',
             'required' => false,
-            'info' => 'CNPJ do possuidor/proprietário',
-            'format' => 'totalNumber',
+            'info' => 'Número de inscrição do estabelecimento matriz da pessoa jurídica no CNPJ.',
+            'format' => '',
             'length' => 14
         ],
         'IE' => [
             'type' => 'string',
-            'regex' => '^ISENTO|[0-9]{2,14}$',
+            'regex' => '^[0-9]{2,14}$',
             'required' => false,
-            'info' => 'Inscrição estadual do possuidor / proprietário',
+            'info' => 'Número de inscrição do estudal.',
             'format' => '',
             'length' => 14
         ],
