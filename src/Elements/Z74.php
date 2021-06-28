@@ -96,6 +96,7 @@ class Z74 extends Element implements ElementInterface
     public function __construct(\stdClass $std)
     {
         parent::__construct(self::REGISTRO);
+        $std->BRANCOS = '';
         $this->std = $this->standarize($std);
         $this->postValidation();
     }
