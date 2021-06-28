@@ -63,12 +63,12 @@ class Z74 extends Element implements ElementInterface
             'format' => '',
             'length' => 14
         ],
-        'IE' => [
+        'BRANCOS' => [
             'type' => 'string',
-            'regex' => '^[0-9]{2,14}$',
+            'regex' => '',
             'required' => false,
-            'info' => 'Número de inscrição do estudal.',
-            'format' => '',
+            'info' => 'Brancos',
+            'format' => 'empty',
             'length' => 14
         ],
         'UF' => [
@@ -79,7 +79,7 @@ class Z74 extends Element implements ElementInterface
             'format' => 'empty',
             'length' => 2
         ],
-        'BRANCOS' => [
+        'BRANCOS_1' => [
             'type' => 'string',
             'regex' => '',
             'required' => false,
@@ -97,6 +97,7 @@ class Z74 extends Element implements ElementInterface
     {
         parent::__construct(self::REGISTRO);
         $std->BRANCOS = '';
+        $std->BRANCOS_1 = '';
         $this->std = $this->standarize($std);
         $this->postValidation();
     }
