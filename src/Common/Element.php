@@ -95,7 +95,8 @@ abstract class Element implements ElementInterface
 
                 $newValue = $this->formatString(
                     $formated,
-                    $stdParam->$key
+                    $stdParam->$key,
+                    $stdParam->$key->type
                 );
 
                 $newstd->$key = $newValue;
@@ -261,15 +262,16 @@ abstract class Element implements ElementInterface
      * Retorna string conforme o tamanho, pois sintegra considera as posições
      * @return string
      */
-    protected function formatString($value, $param)
+    protected function formatString($value, $param, $type)
     {
-        $length = $param->length;
-
-        if (!$value) {
-            return;
+        $pad = STR_PAD_LEFT;
+        $strchar = '0';
+        if ($type == 'string') {
+            $pad = STR_PAD_RIGHT;
+            $strchar = ' ';
         }
-        $newValue = str_pad($value, $length, " ", STR_PAD_RIGHT);
-
+        $length = $param->length;
+        $newValue = strtoupper(str_pad($value, $length, $strchar, $pad));
         return $newValue;
     }
 
