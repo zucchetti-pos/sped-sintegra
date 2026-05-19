@@ -28,11 +28,11 @@ class Z77 extends Element implements ElementInterface
 
     protected $parameters = [
         'CNPJ' => [
-            'type' => 'numeric',
-            'regex' => '^[0-9]{11,14}$',
+            'type' => 'cpfcnpj',
+            'regex' => '^[A-Z0-9]{11,14}$',
             'required' => true,
             'info' => 'CNPJ/CPF do tomador do serviço',
-            'format' => 'totalNumber',
+            'format' => '',
             'length' => 14
         ],
         'IE' => [
@@ -140,11 +140,11 @@ class Z77 extends Element implements ElementInterface
             'length' => 2
         ],
         'CNPJ_MF' => [
-            'type' => 'numeric',
-            'regex' => '^[0-9]{11,14}$',
+            'type' => 'cpfcnpj',
+            'regex' => '^[A-Z0-9]{11,14}$',
             'required' => true,
             'info' => 'CNPJ/MF da operadora de destino',
-            'format' => 'totalNumber',
+            'format' => '',
             'length' => 14
         ],
         'TERMINAL' => [
