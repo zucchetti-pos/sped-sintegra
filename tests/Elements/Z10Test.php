@@ -1,15 +1,16 @@
 <?php
 
-namespace NFePHP\Sintegra\Tests;
+namespace NFePHP\Sintegra\Tests\Elements;
 
+use NFePHP\Sintegra\Elements\Z10;
 use PHPUnit\Framework\TestCase;
 
-class Bloco1Test extends TestCase
+class Z10Test extends TestCase
 {
-    public function testZ10CNPJSuccess()
+    public function testZ10CnpjSuccess(): void
     {
         $std = new \stdClass();
-        $std->cNPJ = '77774523000110';
+        $std->CNPJ = '77774523000110';
         $std->IE = null;
         $std->NOME_CONTRIBUINTE = 'FULANO DE TAL LTDA';
         $std->MUNICIPIO = 'BREJO SECO';
@@ -21,7 +22,7 @@ class Bloco1Test extends TestCase
         $std->COGIGO_NATUREZAS = '3';
         $std->COGIGO_FINALIDADE = '1';
 
-        $elem = new \NFePHP\Sintegra\Elements\Z10($std);
+        $elem = new Z10($std);
         $got = "{$elem}";
         $expected = '1077774523000110              FULANO DE TAL LTDA                 BREJO SECO                    MA00000000002021010120210131131';
 
@@ -29,10 +30,10 @@ class Bloco1Test extends TestCase
         $this->assertEquals($elem->errors, []);
     }
 
-    public function testZ10CPFSuccess()
+    public function testZ10CpfSuccess(): void
     {
         $std = new \stdClass();
-        $std->cNPJ = '50795722052';
+        $std->CNPJ = '50795722052';
         $std->IE = null;
         $std->NOME_CONTRIBUINTE = 'FULANO DE TAL LTDA';
         $std->MUNICIPIO = 'BREJO SECO';
@@ -44,7 +45,7 @@ class Bloco1Test extends TestCase
         $std->COGIGO_NATUREZAS = '3';
         $std->COGIGO_FINALIDADE = '1';
 
-        $elem = new \NFePHP\Sintegra\Elements\Z10($std);
+        $elem = new Z10($std);
         $got = "{$elem}";
         $expected = '1000050795722052              FULANO DE TAL LTDA                 BREJO SECO                    MA00000000002021010120210131131';
 
@@ -52,10 +53,10 @@ class Bloco1Test extends TestCase
         $this->assertEquals($elem->errors, []);
     }
 
-    public function testZ10Fail()
+    public function testZ10InvalidCnpj(): void
     {
         $std = new \stdClass();
-        $std->cNPJ = '777745230';
+        $std->CNPJ = '777745230';
         $std->IE = null;
         $std->NOME_CONTRIBUINTE = 'FULANO DE TAL LTDA';
         $std->MUNICIPIO = 'BREJO SECO';
@@ -67,7 +68,7 @@ class Bloco1Test extends TestCase
         $std->COGIGO_NATUREZAS = '3';
         $std->COGIGO_FINALIDADE = '1';
 
-        $elem = new \NFePHP\Sintegra\Elements\Z10($std);
+        $elem = new Z10($std);
         $got = "{$elem}";
         $expected = '1000000777745230              FULANO DE TAL LTDA                 BREJO SECO                    MA00000000002021010120210131131';
         $this->assertEquals($expected, $got);
@@ -77,44 +78,10 @@ class Bloco1Test extends TestCase
         $this->assertEquals($elem->errors[1]->message, $message);
     }
 
-    public function testZ11Success()
+    public function testBuildWithAlphanumericCnpj(): void
     {
         $std = new \stdClass();
-        $std->LOGRADOURO = 'RUA DO OUVIDOR';
-        $std->NUMERO = '100';
-        $std->COMPLEMENTO = null;
-        $std->BAIRRO = '';
-        $std->CEP = '12345678';
-        $std->CONTATO = 'FULANO DE TAL';
-        $std->TELEFONE = '5555555';
-        $elem = new \NFePHP\Sintegra\Elements\Z11($std);
-        $got = "{$elem}";
-        $expected = '11RUA DO OUVIDOR                    00100                                     12345678FULANO DE TAL               000005555555';
-        $this->assertEquals($expected, $got);
-    }
-
-    public function testZ11Fail()
-    {
-        $std = new \stdClass();
-        $std->LOGRADOURO = 'RUA DO OUVIDOR';
-        $std->NUMERO = '100';
-        $std->COMPLEMENTO = null;
-        $std->BAIRRO = '';
-        //$std->CEP = '12345678';
-        $std->CONTATO = 'FULANO DE TAL';
-        $std->TELEFONE = '5555555';
-        $elem = new \NFePHP\Sintegra\Elements\Z11($std);
-        $got = "{$elem}";
-        $expected = '11RUA DO OUVIDOR                    00100                                     00000000FULANO DE TAL               000005555555';
-        $this->assertEquals($expected, $got);
-        $this->assertNotEmpty($elem->errors);
-    }
-
-    public function testBlocoSuccess()
-    {
-        $b1 = new \NFePHP\Sintegra\Blocks\Block1();
-        $std = new \stdClass();
-        $std->cNPJ = '77774523000110';
+        $std->CNPJ = 'NLG6401C000144';
         $std->IE = null;
         $std->NOME_CONTRIBUINTE = 'FULANO DE TAL LTDA';
         $std->MUNICIPIO = 'BREJO SECO';
@@ -125,23 +92,12 @@ class Bloco1Test extends TestCase
         $std->COGIGO_MAGNETICO = '1';
         $std->COGIGO_NATUREZAS = '3';
         $std->COGIGO_FINALIDADE = '1';
-        $b1->z10($std);
 
-        $std = new \stdClass();
-        $std->LOGRADOURO = 'RUA DO OUVIDOR';
-        $std->NUMERO = '100';
-        $std->COMPLEMENTO = null;
-        $std->BAIRRO = '';
-        $std->CEP = '12345678';
-        $std->CONTATO = 'FULANO DE TAL';
-        $std->TELEFONE = '5555555';
-        $b1->z11($std);
+        $elem = new Z10($std);
+        $got = "{$elem}";
+        $expected = '10NLG6401C000144              FULANO DE TAL LTDA                 BREJO SECO                    MA00000000002021010120210131131';
 
-        $bloco = $b1->get();
-
-        $expected = "1077774523000110              FULANO DE TAL LTDA                 BREJO SECO                    MA00000000002021010120210131131\r\n"
-            . "11RUA DO OUVIDOR                    00100                                     12345678FULANO DE TAL               000005555555\r\n";
-
-        $this->assertEquals($expected, $bloco);
+        $this->assertEquals($expected, $got);
+        $this->assertEquals($elem->errors, []);
     }
 }
